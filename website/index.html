@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Matthew Lim | Portfolio</title>
+    <link rel="icon" type="image/png" href="./favicon.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              'roboto': ['Roboto', 'sans-serif'],
+            },
+            animation: {
+              'fade-in': 'fadeIn 0.6s ease-in-out',
+              'slide-up': 'slideUp 0.8s ease-out',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      @keyframes slideUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes blurIn {
+        from { 
+          opacity: 0; 
+          filter: blur(10px);
+          transform: translateY(20px);
+        }
+        to { 
+          opacity: 1; 
+          filter: blur(0px);
+          transform: translateY(0);
+        }
+      }
+      /* Subtle dotted notebook background pattern - only for light mode */
+      body.dotted-bg:not(.dark) {
+        background-image: 
+          radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.03) 0%, transparent 50%),
+          radial-gradient(circle at 75% 75%, rgba(168, 85, 247, 0.03) 0%, transparent 50%),
+          radial-gradient(circle at 25% 75%, rgba(34, 197, 94, 0.03) 0%, transparent 50%),
+          radial-gradient(circle at 75% 25%, rgba(251, 146, 60, 0.03) 0%, transparent 50%);
+        background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+        background-position: 0 0, 0 0, 0 0, 0 0;
+        position: relative;
+      }
+      
+      /* Dots layer that fades at footer */
+      body.dotted-bg:not(.dark)::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: radial-gradient(circle, rgba(107, 114, 128, 0.35) 0.8px, transparent 0.8px);
+        background-size: 22px 22px;
+        background-position: 0 0;
+        pointer-events: none;
+        z-index: -1;
+        mask: linear-gradient(to bottom, white 0%, white calc(100% - 200px), transparent 100%);
+        -webkit-mask: linear-gradient(to bottom, white 0%, white calc(100% - 200px), transparent 100%);
+      }
+      
+      /* Enhanced hover effects and micro-interactions */
+      .skill-dot {
+        transition: all 0.3s ease;
+      }
+      
+      .skill-dot:hover {
+        transform: scale(1.2);
+        box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+      }
+      
+      .metric-card {
+        transition: all 0.3s ease;
+      }
+      
+      .metric-card:hover {
+        transform: translateY(-2px);
+      }
+      
+      .specialization-tag {
+        transition: all 0.3s ease;
+      }
+      
+      .specialization-tag:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        background: rgba(255, 255, 255, 0.95) !important;
+      }
+      
+      .dark .specialization-tag:hover {
+        background: rgba(31, 41, 55, 0.95) !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+      
+      /* Smooth scroll behavior */
+      html {
+        scroll-behavior: smooth;
+      }
+      
+      /* Enhanced card animations */
+      .card-hover {
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      
+      .card-hover:hover {
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      }
+      
+      .dark .card-hover:hover {
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      }
+      
+      @keyframes blurInSlow {
+        from { 
+          opacity: 0; 
+          filter: blur(15px);
+          transform: translateY(30px);
+        }
+        to { 
+          opacity: 1; 
+          filter: blur(0px);
+          transform: translateY(0);
+        }
+      }
+      
+      .blur-in {
+        animation: blurIn 0.4s ease-out forwards;
+      }
+      .blur-in-slow {
+        animation: blurInSlow 0.5s ease-out forwards;
+      }
+      .blur-in-delay-1 {
+        animation: blurIn 0.4s ease-out 0.15s forwards;
+        opacity: 0;
+      }
+      .blur-in-delay-2 {
+        animation: blurIn 0.4s ease-out 0.3s forwards;
+        opacity: 0;
+      }
+      .blur-in-delay-3 {
+        animation: blurIn 0.4s ease-out 0.45s forwards;
+        opacity: 0;
+      }
+      .blur-in-delay-4 {
+        animation: blurIn 0.4s ease-out 0.6s forwards;
+        opacity: 0;
+      }
+      .blur-in-delay-5 {
+        animation: blurIn 0.4s ease-out 0.75s forwards;
+        opacity: 0;
+      }
+      .blur-in-delay-6 {
+        animation: blurIn 0.4s ease-out 0.9s forwards;
+        opacity: 0;
+      }
+      
+      /* Mobile optimizations - targeting all mobile devices */
+      @media screen and (max-width: 1024px) {
+        /* Hide dark mode toggle on mobile and tablet */
+        #theme-toggle,
+        .mobile-hide {
+          display: none !important;
+          visibility: hidden !important;
+        }
+      }
+      
+      @media screen and (max-width: 768px) {
+        /* Additional mobile-specific optimizations */
+        body {
+          -webkit-font-smoothing: antialiased !important;
+          -moz-osx-font-smoothing: grayscale !important;
+          text-rendering: optimizeLegibility !important;
+        }
+        
+        /* Improve email link rendering on mobile */
+        .email-link {
+          -webkit-font-smoothing: antialiased !important;
+          -moz-osx-font-smoothing: grayscale !important;
+          text-rendering: optimizeLegibility !important;
+          transform: translateZ(0) !important;
+          backface-visibility: hidden !important;
+          perspective: 1000px !important;
+          font-weight: 600 !important;
+          letter-spacing: 0.025em !important;
+          transition: none !important;
+          font-size: 16px !important;
+          will-change: transform !important;
+        }
+        
+        /* Ensure all text is crisp on mobile */
+        * {
+          -webkit-font-smoothing: antialiased !important;
+          -moz-osx-font-smoothing: grayscale !important;
+          text-rendering: optimizeLegibility !important;
+        }
+      }
+      
+      /* Touch device detection */
+      @media (hover: none) and (pointer: coarse) {
+        #theme-toggle,
+        .mobile-hide {
+          display: none !important;
+          visibility: hidden !important;
+        }
+        
+        .email-link {
+          -webkit-font-smoothing: antialiased !important;
+          -moz-osx-font-smoothing: grayscale !important;
+          font-weight: 600 !important;
+          will-change: transform !important;
+        }
+        
+        /* Disable tooltips on touch devices */
+        .group .absolute {
+          display: none !important;
+        }
+      }
+      
+      /* Disable tooltips on mobile screens */
+      @media screen and (max-width: 768px) {
+        .group .absolute {
+          display: none !important;
+        }
+      }
+      
+      /* Mobile tooltip positioning fix */
+      @media screen and (max-width: 768px) {
+        /* Right column tooltips - position from right edge */
+        .group:nth-child(3n) .absolute,
+        .group:last-child .absolute {
+          left: auto !important;
+          right: 0 !important;
+          transform: translateX(0) !important;
+        }
+        
+        .group:nth-child(3n) .absolute .absolute,
+        .group:last-child .absolute .absolute {
+          left: 50% !important;
+          right: auto !important;
+          transform: translateX(-50%) !important;
+        }
+        
+        /* Left column tooltips - position from left edge */
+        .group:nth-child(3n+1) .absolute {
+          left: 0 !important;
+          right: auto !important;
+          transform: translateX(0) !important;
+        }
+        
+        .group:nth-child(3n+1) .absolute .absolute {
+          left: 50% !important;
+          right: auto !important;
+          transform: translateX(-50%) !important;
+        }
+        
+        /* Center column tooltips - keep centered */
+        .group:nth-child(3n+2) .absolute {
+          left: 50% !important;
+          right: auto !important;
+          transform: translateX(-50%) !important;
+        }
+        
+        .group:nth-child(3n+2) .absolute .absolute {
+          left: 50% !important;
+          right: auto !important;
+          transform: translateX(-50%) !important;
+        }
+      }
+      
+    </style>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+  </head>
+  
+  <body class="font-roboto bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300 dotted-bg min-h-screen">
+    <!-- Dark mode toggle - hidden on mobile -->
+    <button id="theme-toggle" class="fixed top-6 right-6 z-50 w-12 h-12 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300 shadow-lg mobile-hide">
+      <i class="fas fa-moon text-lg dark:hidden text-gray-600"></i>
+      <i class="fas fa-sun text-lg hidden dark:block text-yellow-400"></i>
+    </button>
+
+    <!-- Background particles -->
+    <div id="particles-js" class="fixed inset-0 -z-10"></div>
+
+    <!-- Main container -->
+    <div class="min-h-screen max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 lg:px-8">
+      
+      <!-- Header section -->
+      <header class="text-center mb-16 animate-fade-in">
+        <div class="mb-8">
+          <img src="./assets/img/headshot-modified-2.jpeg" alt="Matthew Lim" 
+               class="w-32 h-32 rounded-full mx-auto mb-6 border-4 border-white dark:border-gray-700 shadow-xl object-contain bg-black" 
+               style="object-position: 57% 5px;">
+          <h1 class="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4 blur-in-slow lowercase">
+            matthew lim
+          </h1>
+          <p class="text-lg sm:text-xl text-gray-600 dark:text-gray-400 mb-6 max-w-2xl mx-auto leading-relaxed blur-in-delay-1 flex flex-col items-center px-4">
+            <span class="whitespace-nowrap text-center">software engineer @ google</span>
+            <span class="flex items-center whitespace-nowrap">
+              data science alum @ uc berkeley 
+              <span class="inline-block ml-2">
+                <img src="https://sportslogohistory.com/wp-content/uploads/2022/10/california_golden_bears_1952-pres_a.png" 
+                     alt="UC Berkeley Logo" class="w-6 h-6 cursor-pointer hover:scale-110 hover:rotate-12 hover:drop-shadow-lg transition-all duration-300" 
+                     onclick="createBearRain()">
+              </span>
+            </span>
+          </p>
+          <div class="flex items-center justify-center text-gray-500 dark:text-gray-400 mb-8 blur-in-delay-2">
+            <i class="fas fa-envelope mr-2"></i>
+            <a href="mailto:matthewlim@berkeley.edu" class="email-link hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300">matthewlim@berkeley.edu</a>
+          </div>
+        </div>
+
+        <!-- Social links -->
+        <div class="flex justify-center space-x-6 blur-in-delay-3">
+          <a href="https://github.com/matthewlimm" target="_blank"
+             class="group flex items-center space-x-2 px-6 py-3 bg-gray-100 dark:bg-gray-800 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 shadow-sm hover:shadow-md">
+            <i class="fab fa-github text-lg group-hover:scale-110 transition-transform"></i>
+            <span class="font-medium">GitHub</span>
+          </a>
+          <a href="https://www.linkedin.com/in/matthewjlim25/" target="_blank"
+             class="group flex items-center space-x-2 px-6 py-3 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-all duration-300 shadow-sm hover:shadow-md">
+            <i class="fab fa-linkedin text-lg group-hover:scale-110 transition-transform"></i>
+            <span class="font-medium">LinkedIn</span>
+          </a>
+        </div>
+      </header>
+
+      <!-- About section -->
+      <section class="mb-16 blur-in-delay-4">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8 flex items-center lowercase">
+          <span class="w-12 h-1 bg-blue-500 mr-4 rounded-full"></span>
+          about
+        </h2>
+        <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-200/50 dark:border-gray-700/50 hover:shadow-xl transition-all duration-300">
+          <div class="space-y-6">
+            <p class="text-lg leading-relaxed text-gray-700 dark:text-gray-300">
+              Software engineer with expertise in <span class="font-semibold text-blue-600 dark:text-blue-400">machine learning</span>, 
+              <span class="font-semibold text-purple-600 dark:text-purple-400">cloud infrastructure</span>, and 
+              <span class="font-semibold text-green-600 dark:text-green-400">full-stack development</span>.
+            </p>
+            <p class="text-base leading-relaxed text-gray-600 dark:text-gray-400">
+              I thrive on transforming complex problems into elegant solutions, whether it's building 
+              user-focused applications, implementing ML pipelines, or architecting cloud infrastructure. 
+              My approach combines technical rigor with creative problem-solving to deliver impactful results that truly benefit users.
+            </p>
+            
+            <!-- Specializations -->
+            <div class="mt-8 bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-900/20 dark:to-blue-900/20 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-indigo-200/50 dark:border-indigo-700/50">
+              <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+                <i class="fas fa-brain text-purple-500 mr-3"></i>
+                Specializations
+              </h3>
+              <div class="flex flex-wrap gap-3">
+                <!-- AI/ML & Data -->
+                <span class="specialization-tag px-4 py-2 bg-white/80 dark:bg-gray-800/80 rounded-full text-sm font-medium text-gray-700 dark:text-gray-300 shadow-sm border border-gray-200/50 dark:border-gray-700/50">Artificial Intelligence / Machine Learning</span>
+                <span class="specialization-tag px-4 py-2 bg-white/80 dark:bg-gray-800/80 rounded-full text-sm font-medium text-gray-700 dark:text-gray-300 shadow-sm border border-gray-200/50 dark:border-gray-700/50">Data Science / Data Engineering</span>
+                <span class="specialization-tag px-4 py-2 bg-white/80 dark:bg-gray-800/80 rounded-full text-sm font-medium text-gray-700 dark:text-gray-300 shadow-sm border border-gray-200/50 dark:border-gray-700/50">Statistics / Analytics</span>
+                
+                <!-- Systems & Infrastructure -->
+                <span class="specialization-tag px-4 py-2 bg-white/80 dark:bg-gray-800/80 rounded-full text-sm font-medium text-gray-700 dark:text-gray-300 shadow-sm border border-gray-200/50 dark:border-gray-700/50">Infrastructure / Systems Programming</span>
+                <span class="specialization-tag px-4 py-2 bg-white/80 dark:bg-gray-800/80 rounded-full text-sm font-medium text-gray-700 dark:text-gray-300 shadow-sm border border-gray-200/50 dark:border-gray-700/50">Databases</span>
+                
+                <!-- Development & Tools -->
+                <span class="specialization-tag px-4 py-2 bg-white/80 dark:bg-gray-800/80 rounded-full text-sm font-medium text-gray-700 dark:text-gray-300 shadow-sm border border-gray-200/50 dark:border-gray-700/50">Internal Development / Internal Tools</span>
+                <span class="specialization-tag px-4 py-2 bg-white/80 dark:bg-gray-800/80 rounded-full text-sm font-medium text-gray-700 dark:text-gray-300 shadow-sm border border-gray-200/50 dark:border-gray-700/50">Tools / API / Compilers</span>
+                <span class="specialization-tag px-4 py-2 bg-white/80 dark:bg-gray-800/80 rounded-full text-sm font-medium text-gray-700 dark:text-gray-300 shadow-sm border border-gray-200/50 dark:border-gray-700/50">Web Applications</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Experience section -->
+      <section class="mb-16 blur-in-delay-5">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8 flex items-center lowercase">
+          <span class="w-12 h-1 bg-purple-500 mr-4 rounded-full"></span>
+          experience
+        </h2>
+        
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+          <!-- Google -->
+          <div class="group relative flex flex-col items-center p-6 bg-gradient-to-br from-blue-50 to-green-100 dark:from-blue-900/20 dark:to-green-800/20 backdrop-blur-sm rounded-2xl shadow-lg border border-blue-200/50 dark:border-blue-700/50 hover:shadow-xl hover:scale-105 transition-all duration-300">
+            <div class="w-16 h-16 mb-4 flex items-center justify-center bg-white rounded-2xl shadow-md overflow-hidden group-hover:shadow-lg transition-shadow duration-300">
+              <img src="https://logo.clearbit.com/google.com" alt="Google Logo" class="w-10 h-10 object-contain">
+            </div>
+            <h3 class="text-sm font-semibold text-gray-800 dark:text-gray-200 text-center mb-1">Google</h3>
+            <p class="text-xs text-blue-600 dark:text-blue-400 font-medium">Current</p>
+            
+            <!-- Tooltip -->
+            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 px-4 py-3 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-sm rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap z-20 shadow-2xl">
+              <div class="font-semibold">Software Engineer</div>
+              <div class="text-gray-300 dark:text-gray-600 text-xs">YouTube Payments</div>
+              <div class="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-900 dark:border-t-gray-100"></div>
+            </div>
+          </div>
+
+          <!-- Amazon -->
+          <div class="group relative flex flex-col items-center p-6 bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 backdrop-blur-sm rounded-2xl shadow-lg border border-orange-200/50 dark:border-orange-700/50 hover:shadow-xl hover:scale-105 transition-all duration-300">
+            <div class="w-16 h-16 mb-4 flex items-center justify-center bg-white rounded-2xl shadow-md overflow-hidden group-hover:shadow-lg transition-shadow duration-300">
+              <img src="https://i.pinimg.com/originals/01/ca/da/01cada77a0a7d326d85b7969fe26a728.jpg" alt="Amazon Logo" class="w-20 h-12 object-cover object-center">
+            </div>
+            <h3 class="text-sm font-semibold text-gray-800 dark:text-gray-200 text-center mb-1">Amazon</h3>
+            <p class="text-xs text-orange-600 dark:text-orange-400 font-medium">Jun - Aug '25</p>
+            
+            <!-- Tooltip -->
+            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 px-4 py-3 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-sm rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap z-20 shadow-2xl">
+              <div class="font-semibold">Software Development Engineer</div>
+              <div class="text-gray-300 dark:text-gray-600 text-xs">AGI Data Services</div>
+              <div class="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-900 dark:border-t-gray-100"></div>
+            </div>
+          </div>
+
+          <!-- Mattel -->
+          <div class="group relative flex flex-col items-center p-6 bg-gradient-to-br from-pink-50 to-pink-100 dark:from-pink-900/20 dark:to-pink-800/20 backdrop-blur-sm rounded-2xl shadow-lg border border-pink-200/50 dark:border-pink-700/50 hover:shadow-xl hover:scale-105 transition-all duration-300">
+            <div class="w-16 h-16 mb-4 flex items-center justify-center bg-white rounded-2xl shadow-md overflow-hidden group-hover:shadow-lg transition-shadow duration-300">
+              <img src="https://logo.clearbit.com/mattel.com" alt="Mattel Logo" class="w-12 h-12 object-contain">
+            </div>
+            <h3 class="text-sm font-semibold text-gray-800 dark:text-gray-200 text-center mb-1">Mattel</h3>
+            <p class="text-xs text-pink-600 dark:text-pink-400 font-medium">Sep '24 - Jan '25</p>
+            
+            <!-- Tooltip -->
+            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 px-4 py-3 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-sm rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap z-20 shadow-2xl">
+              <div class="font-semibold">Data Engineer Contractor</div>
+              <div class="text-gray-300 dark:text-gray-600 text-xs">ESG Data Pipelines and Dashboards</div>
+              <div class="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-900 dark:border-t-gray-100"></div>
+            </div>
+          </div>
+
+          <!-- PwC -->
+          <div class="group relative flex flex-col items-center p-6 bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-800/20 backdrop-blur-sm rounded-2xl shadow-lg border border-red-200/50 dark:border-red-700/50 hover:shadow-xl hover:scale-105 transition-all duration-300">
+            <div class="w-16 h-16 mb-4 flex items-center justify-center bg-white rounded-2xl shadow-md overflow-hidden group-hover:shadow-lg transition-shadow duration-300">
+              <img src="https://logo.clearbit.com/pwc.com" alt="PwC Logo" class="w-15 h-15 object-cover object-center">
+            </div>
+            <h3 class="text-sm font-semibold text-gray-800 dark:text-gray-200 text-center mb-1">PwC</h3>
+            <p class="text-xs text-red-600 dark:text-red-400 font-medium">Jun - Aug '24</p>
+            
+            <!-- Tooltip -->
+            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 px-4 py-3 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-sm rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap z-20 shadow-2xl">
+              <div class="font-semibold">Software Engineer Intern</div>
+              <div class="text-gray-300 dark:text-gray-600 text-xs">Generative AI Chatbot</div>
+              <div class="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-900 dark:border-t-gray-100"></div>
+            </div>
+          </div>
+
+          <!-- Conagra Brands -->
+          <div class="group relative flex flex-col items-center p-6 bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 backdrop-blur-sm rounded-2xl shadow-lg border border-green-200/50 dark:border-green-700/50 hover:shadow-xl hover:scale-105 transition-all duration-300">
+            <div class="w-16 h-16 mb-4 flex items-center justify-center bg-white rounded-2xl shadow-md overflow-hidden group-hover:shadow-lg transition-shadow duration-300">
+              <img src="https://logo.clearbit.com/conagrabrands.com" alt="Conagra Logo" class="w-14 h-14 object-cover object-center">
+            </div>
+            <h3 class="text-sm font-semibold text-gray-800 dark:text-gray-200 text-center mb-1">Conagra</h3>
+            <p class="text-xs text-green-600 dark:text-green-400 font-medium">Feb - May '24</p>
+            
+            <!-- Tooltip -->
+            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 px-4 py-3 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-sm rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap z-20 shadow-2xl">
+              <div class="font-semibold">Data Science Intern</div>
+              <div class="text-gray-300 dark:text-gray-600 text-xs">RAG Database Chatbot</div>
+              <div class="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-900 dark:border-t-gray-100"></div>
+            </div>
+          </div>
+
+          <!-- CareerVillage -->
+          <div class="group relative flex flex-col items-center p-6 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 backdrop-blur-sm rounded-2xl shadow-lg border border-blue-200/50 dark:border-blue-700/50 hover:shadow-xl hover:scale-105 transition-all duration-300">
+            <div class="w-16 h-16 mb-4 flex items-center justify-center bg-white rounded-2xl shadow-md overflow-hidden group-hover:shadow-lg transition-shadow duration-300">
+              <img src="https://logo.clearbit.com/careervillage.org" alt="CareerVillage Logo" class="w-12 h-12 object-contain">
+            </div>
+            <h3 class="text-sm font-semibold text-gray-800 dark:text-gray-200 text-center mb-1">CareerVillage</h3>
+            <p class="text-xs text-blue-600 dark:text-blue-400 font-medium">Jun - Jul '23</p>
+            
+            <!-- Tooltip -->
+            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 px-4 py-3 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-sm rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap z-20 shadow-2xl">
+              <div class="font-semibold">Consulting Intern</div>
+              <div class="text-gray-300 dark:text-gray-600 text-xs">PwC Pro Bono Case - Top 7% (6/77) Finalists</div>
+              <div class="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-900 dark:border-t-gray-100"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects section -->
+      <section class="blur-in-delay-6">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8 flex items-center lowercase">
+          <span class="w-12 h-1 bg-green-500 mr-4 rounded-full"></span>
+          projects
+        </h2>
+        
+        <div class="space-y-8">
+          <!-- Project 1: BerkeleyBrew -->
+          <div class="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-200/50 dark:border-gray-700/50 hover:shadow-xl transition-all duration-300">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:space-x-8">
+              <div class="lg:flex-1 mb-6 lg:mb-0">
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3 flex items-center">
+                  <a href="https://github.com/matthewlimm/berkeley-brew" target="_blank"
+                     class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 inline-flex items-center mr-2">
+                    BerkeleyBrew
+                    <i class="fas fa-external-link-alt ml-2 text-sm"></i>
+                  </a>
+                </h3>
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span class="px-3 py-1 text-xs font-medium bg-black text-white rounded-full">Next.js</span>
+                  <span class="px-3 py-1 text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full">TypeScript</span>
+                  <span class="px-3 py-1 text-xs font-medium bg-cyan-100 dark:bg-cyan-900/30 text-cyan-800 dark:text-cyan-300 rounded-full">TailwindCSS</span>
+                  <span class="px-3 py-1 text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-full">Supabase</span>
+                  <span class="px-3 py-1 text-xs font-medium bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 rounded-full">PostgreSQL</span>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                  Hyperlocal coffee discovery platform engineered for the UC Berkeley community. Provides Yelp-inspired filters, real-time crowd 
+                  analytics via Google Maps integration, and community-driven rating systems. Built with modern full-stack architecture featuring personalized user experiences and location-based 
+                  coffee shop discovery.
+                </p>
+              </div>
+              <div class="lg:w-80">
+                <div class="w-full h-60 bg-gradient-to-br from-amber-50 to-orange-100 dark:from-amber-900/20 dark:to-orange-900/20 rounded-xl shadow-md group-hover:shadow-lg transition-all duration-300 flex items-center justify-center border border-amber-200/50 dark:border-amber-700/50 overflow-hidden">
+                  <img src="./assets/img/berkeleybrew.gif" alt="Berkeley Brew Demo" 
+                       class="w-full h-full object-cover rounded-xl">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2: This Website -->
+          <div class="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-200/50 dark:border-gray-700/50 hover:shadow-xl transition-all duration-300">
+            <div class="flex flex-col lg:flex-row-reverse lg:items-center lg:space-x-reverse lg:space-x-8">
+              <div class="lg:flex-1 mb-6 lg:mb-0">
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+                  <a href="https://github.com/matthewlimm/matthewjlim.com" target="_blank"
+                     class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 inline-flex items-center">
+                    This Website!
+                    <i class="fas fa-external-link-alt ml-2 text-sm"></i>
+                  </a>
+                </h3>
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span class="px-3 py-1 text-xs font-medium bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300 rounded-full">AWS</span>
+                  <span class="px-3 py-1 text-xs font-medium bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 rounded-full">Python</span>
+                  <span class="px-3 py-1 text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full">JavaScript</span>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                  Full-stack cloud portfolio architected on AWS with serverless infrastructure. Features DynamoDB 
+                  storage, Lambda functions, and Terraform IaC deployment. Implements modern responsive design 
+                  with real-time visitor tracking and dark mode support.
+                </p>
+              </div>
+              <div class="lg:w-80">
+                <div class="w-full h-60 bg-gray-50 dark:bg-gray-800 rounded-xl shadow-md group-hover:shadow-lg transition-all duration-300 flex items-center justify-center border border-gray-200/50 dark:border-gray-700/50 overflow-hidden">
+                  <img src="./assets/img/matthewlim.png" alt="Website Screenshot" 
+                       class="w-full h-full object-cover object-top rounded-xl">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 3: MusicMate -->
+          <div class="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-200/50 dark:border-gray-700/50 hover:shadow-xl transition-all duration-300">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:space-x-8">
+              <div class="lg:flex-1 mb-6 lg:mb-0">
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+                  <a href="https://github.com/matthewlimm/musicmate" target="_blank"
+                     class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 inline-flex items-center">
+                    MusicMate
+                    <i class="fas fa-external-link-alt ml-2 text-sm"></i>
+                  </a>
+                </h3>
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span class="px-3 py-1 text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full">Python</span>
+                  <span class="px-3 py-1 text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-full">Pandas</span>
+                  <span class="px-3 py-1 text-xs font-medium bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 rounded-full">Scikit Learn</span>
+                  <span class="px-3 py-1 text-xs font-medium bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 rounded-full">Flask</span>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                  Intelligent music analytics platform integrating Spotify API with machine learning. Features 
+                  mood classification using Random Forest algorithms, comprehensive listening pattern analysis, 
+                  and personalized insights through advanced data processing pipelines.
+                </p>
+              </div>
+              <div class="lg:w-80">
+                <div class="w-full h-60 bg-gradient-to-br from-purple-50 to-pink-100 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl shadow-md group-hover:shadow-lg transition-all duration-300 flex items-center justify-center border border-purple-200/50 dark:border-purple-700/50 overflow-hidden">
+                  <img src="./assets/img/music.gif" alt="MusicMate Demo" 
+                       class="w-full h-full object-cover rounded-xl">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 4: SEMS -->
+          <div class="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-200/50 dark:border-gray-700/50 hover:shadow-xl transition-all duration-300">
+            <div class="flex flex-col lg:flex-row-reverse lg:items-center lg:space-x-reverse lg:space-x-8">
+              <div class="lg:flex-1 mb-6 lg:mb-0">
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+                  <a href="https://github.com/matthewlimm/SEMS" target="_blank"
+                     class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 inline-flex items-center">
+                    SEMS
+                    <i class="fas fa-external-link-alt ml-2 text-sm"></i>
+                  </a>
+                </h3>
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span class="px-3 py-1 text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full">Python</span>
+                  <span class="px-3 py-1 text-xs font-medium bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 rounded-full">Flask</span>
+                  <span class="px-3 py-1 text-xs font-medium bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300 rounded-full">Plotly</span>
+                  <span class="px-3 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300 rounded-full">Arduino</span>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                  IoT-enabled environmental monitoring system with multi-sensor integration. Deployed Raspberry Pi 
+                  hardware measuring air quality, radiation levels, and atmospheric conditions. Engineered real-time 
+                  data pipelines with interactive Plotly visualization dashboards for comprehensive environmental analysis.
+                </p>
+              </div>
+              <div class="lg:w-80">
+                <div class="w-full h-60 bg-gradient-to-br from-green-50 to-blue-100 dark:from-green-900/20 dark:to-blue-900/20 rounded-xl shadow-md group-hover:shadow-lg transition-all duration-300 flex items-center justify-center border border-green-200/50 dark:border-green-700/50 overflow-hidden">
+                  <img src="./assets/img/SEMS.gif" alt="SEMS Demo" 
+                       class="w-full h-full object-cover object-right rounded-xl">
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="mt-20 pt-8 border-t border-gray-200 dark:border-gray-700">
+        <div class="text-center text-sm text-gray-500 dark:text-gray-400">
+          <p>Hosted on AWS | Built with ☕</p>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="./particles.js"></script>
+    <script>
+      // Dark mode toggle
+      const themeToggle = document.getElementById('theme-toggle');
+      const html = document.documentElement;
+      const body = document.body;
+      
+      // Check for saved theme or default to light mode
+      const currentTheme = localStorage.getItem('theme') || 'light';
+      html.classList.toggle('dark', currentTheme === 'dark');
+      body.classList.toggle('dark', currentTheme === 'dark');
+      
+      themeToggle.addEventListener('click', () => {
+        const isDark = html.classList.contains('dark');
+        html.classList.toggle('dark', !isDark);
+        body.classList.toggle('dark', !isDark);
+        localStorage.setItem('theme', isDark ? 'light' : 'dark');
+      });
+
+      // UC Berkeley logo rain effect
+      function createBearRain() {
+        // Create "GO BEARS!" overlay with gold exclamation
+        const overlay = document.createElement('div');
+        overlay.innerHTML = '<span style="color: #1E40AF; text-shadow: 0 0 10px rgba(30, 64, 175, 0.5), 2px 2px 4px rgba(0,0,0,0.8);">GO </span><span style="color: #FDB515; text-shadow: 0 0 10px rgba(253, 181, 21, 0.5), 2px 2px 4px rgba(0,0,0,0.8);">BEARS</span><span style="color: #1E40AF; text-shadow: 0 0 10px rgba(30, 64, 175, 0.5), 2px 2px 4px rgba(0,0,0,0.8);">!</span> 🐻';
+        overlay.style.cssText = `
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%) scale(0);
+          font-size: clamp(2rem, 8vw, 4rem);
+          font-weight: bold;
+          filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.4));
+          z-index: 10000;
+          pointer-events: none;
+          white-space: nowrap;
+          animation: titleEnter 0.6s ease-out forwards, pulse 2s ease-in-out infinite 0.6s;
+        `;
+        document.body.appendChild(overlay);
+
+        // Add animations
+        const style = document.createElement('style');
+        style.textContent = `
+          @keyframes titleEnter {
+            0% { 
+              transform: translate(-50%, -50%) scale(0) rotate(-10deg); 
+              opacity: 0; 
+            }
+            60% { 
+              transform: translate(-50%, -50%) scale(1.1) rotate(2deg); 
+              opacity: 1; 
+            }
+            100% { 
+              transform: translate(-50%, -50%) scale(1) rotate(0deg); 
+              opacity: 1; 
+            }
+          }
+          @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+          }
+          @keyframes fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            95% { transform: translateY(calc(100vh + 50px)) rotate(720deg); opacity: 0.9; }
+            100% { transform: translateY(calc(100vh + 200px)) rotate(720deg); opacity: 0; }
+          }
+          @keyframes fadeOut {
+            0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+          }
+        `;
+        document.head.appendChild(style);
+
+        // Create falling logos
+        for (let i = 0; i < 20; i++) {
+          setTimeout(() => {
+            const fallingLogo = document.createElement('img');
+            fallingLogo.src = 'https://sportslogohistory.com/wp-content/uploads/2022/10/california_golden_bears_1952-pres_a.png';
+            fallingLogo.style.cssText = `
+              position: fixed;
+              width: 40px;
+              height: 40px;
+              left: ${Math.random() * (window.innerWidth - 40)}px;
+              top: -100px;
+              z-index: 9999;
+              pointer-events: none;
+              animation: fall ${1.2 + Math.random() * 0.6}s linear forwards;
+            `;
+            document.body.appendChild(fallingLogo);
+
+            // Remove logo after animation
+            setTimeout(() => {
+              if (fallingLogo.parentNode) {
+                fallingLogo.parentNode.removeChild(fallingLogo);
+              }
+            }, 2500);
+          }, i * 50);
+        }
+
+        // Fade out overlay after 2.5 seconds
+        setTimeout(() => {
+          overlay.style.animation = 'fadeOut 0.5s ease-out forwards';
+        }, 2500);
+
+        // Remove overlay after fade
+        setTimeout(() => {
+          if (overlay.parentNode) {
+            overlay.parentNode.removeChild(overlay);
+          }
+          if (style.parentNode) {
+            style.parentNode.removeChild(style);
+          }
+        }, 3000);
+      }
+
+      // Smooth scroll for better UX
+      document.addEventListener('DOMContentLoaded', function() {
+        // Add stagger animation to project cards
+        const projects = document.querySelectorAll('.space-y-8 > div');
+        projects.forEach((project, index) => {
+          project.style.animationDelay = `${index * 0.2}s`;
+          project.classList.add('animate-slide-up');
+        });
+
+        // Add click event to UC Berkeley logo
+        const berkeleyLogo = document.querySelector('img[alt="UC Berkeley Logo"]');
+        if (berkeleyLogo) {
+          berkeleyLogo.addEventListener('click', createBearRain);
+        }
+      });
+    </script>
+    <script src="./index.js"></script>
+  </body>
+</html>
