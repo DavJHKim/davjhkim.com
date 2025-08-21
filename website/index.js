@@ -77,5 +77,9 @@ function ordinal_suffix_of(i) {
 
 // Initialize counter when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
+    if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+        console.log("View counter disabled locally.");
+        return;
+    }
     updateCounter();
 });
