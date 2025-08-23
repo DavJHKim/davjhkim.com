@@ -8,12 +8,12 @@ async function updateCounter() {
 
         try {
             // If not counted, send a POST request to increment the counter
-            let response = await fetch(`https://fa3ikps5tkrdenqxnnrx5huqtq0jbkfy.lambda-url.us-west-1.on.aws/?t=${new Date().getTime()}`, {
+            let response = await fetch(`https://ye44pqbegvkyqqiufo3e3tqlmi0jfxkb.lambda-url.sa-east-1.on.aws/?t=${new Date().getTime()}`, {
                 method: 'POST'
             });
             
             let result = await response.json(); // Parse the JSON response
-            data = result.views; // Extract the views count
+            data = result; // Extract the views count
 
             // Mark session as counted
             sessionStorage.setItem('viewCounted', 'true');
@@ -27,9 +27,9 @@ async function updateCounter() {
 
         try {
             // If already counted, send a GET request to retrieve the current count
-            let response = await fetch('https://fa3ikps5tkrdenqxnnrx5huqtq0jbkfy.lambda-url.us-west-1.on.aws/');
+            let response = await fetch('https://ye44pqbegvkyqqiufo3e3tqlmi0jfxkb.lambda-url.sa-east-1.on.aws/');
             let result = await response.json(); // Parse the JSON response
-            data = result.views; // Extract the views count
+            data = result; // Extract the views count
         } catch (error) {
             console.log("Error fetching counter:", error);
             return; // Exit gracefully if API fails
@@ -38,6 +38,7 @@ async function updateCounter() {
 
     // Create and display the view counter in the footer
     createViewCounter(data);
+
 
     // For debugging: log the current view count
     console.log(`Current view count: ${data}`);
@@ -58,6 +59,7 @@ function createViewCounter(viewCount) {
         // Insert the view counter
         footer.appendChild(viewElement);
     }
+
 }
 
 function ordinal_suffix_of(i) {
@@ -77,9 +79,5 @@ function ordinal_suffix_of(i) {
 
 // Initialize counter when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
-        console.log("View counter disabled locally.");
-        return;
-    }
     updateCounter();
 });
