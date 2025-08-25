@@ -1,0 +1,38 @@
+# Local .env with secrets
+.env
+
+# Terraform state files
+*.tfstate
+*.tfstate.*
+terraform.tfstate
+terraform.tfstate.*
+
+# Crash logs
+crash.log
+crash.*.log
+
+# Terraform variable files with secrets
+*.tfvars
+*.tfvars.json
+terraform.tfvars
+
+# Override files (local only)
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Terraform provider/plugin cache
+.terraform/
+.terraform.lock.hcl
+
+# Archive artifacts (your lambda .zip)
+*.zip
+
+# MacOS junk
+.DS_Store
+
+# Editor/IDE junk
+.vscode/
+.idea/
+*.swp
